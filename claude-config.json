@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "advocu": {
+      "command": "node",
+      "args": ["/Users/sarthak/Desktop/cagent/advocu-mcp/dist/index.js"],
+      "env": {
+        "ADVOCU_API_KEY": "YOUR_API_KEY_HERE",
+        "ADVOCU_API_URL": "https://api.advocu.com/personal-api/v1/dockercaptains"
+      }
+    }
+  }
+}

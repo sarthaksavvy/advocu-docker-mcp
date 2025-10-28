@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  advocu-mcp:
+    image: sarthaksavvy/advocu-mcp-server:latest
+    container_name: advocu-mcp-server
+    environment:
+      # Set your API key as an environment variable or in .env file
+      # Required for submitting activities to Advocu
+      - ADVOCU_API_KEY=${ADVOCU_API_KEY}
+      # Note: API URL is hardcoded to https://api.advocu.com/personal-api/v1/dockercaptains
+    # Keep container running and attach to stdin/stdout
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    # Uncomment below if you need to mount volumes (e.g., for logs)
+    # volumes:
+    #   - ./logs:/app/logs

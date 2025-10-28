@@ -1,0 +1,12 @@
+node_modules
+npm-debug.log
+.git
+.gitignore
+README.md
+USAGE.md
+CAGENT_SETUP.md
+*.md
+claude-config.json
+mcp-config.example.json
+memory.db
+.DS_Store

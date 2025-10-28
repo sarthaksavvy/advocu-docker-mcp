@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "advocu": {
+      "command": "node",
+      "args": ["/path/to/advocu-mcp/dist/index.js"],
+      "env": {
+        "ADVOCU_API_URL": "https://api.advocu.com",
+        "ADVOCU_API_KEY": "your-api-key-here"
+      }
+    }
+  }
+}
