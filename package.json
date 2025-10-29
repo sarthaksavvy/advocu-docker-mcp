@@ -9,7 +9,10 @@
     "dev": "tsx src/index.ts",
     "start": "node dist/index.js"
   },
-  "keywords": ["mcp", "advocu"],
+  "keywords": [
+    "mcp",
+    "advocu"
+  ],
   "author": "",
   "license": "MIT",
   "dependencies": {

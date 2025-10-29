@@ -118,6 +118,19 @@ Submit an amplification activity.
 - `url` (string, max 100 characters)
 - `private` (boolean)
 
+### 6. scrape_content
+Scrape content from a URL (YouTube video, article, or any link) to extract metadata.
+
+**Required fields:**
+- `url` (string, must be a valid HTTP/HTTPS URL)
+
+**Returns:**
+Metadata extracted from the URL, including:
+- For YouTube videos: `title`, `description`, `viewCount`, `channelName`, `publishDate`, `uploadDate`, `thumbnailUrl`, `videoId`
+- For articles/websites: `title`, `description`, `publishDate`, `author`, `siteName`, `imageUrl`, `contentType`
+
+This tool uses `curl` to fetch HTML content and parses metadata from Open Graph tags, meta tags, JSON-LD structured data, and platform-specific formats (e.g., YouTube's embedded data).
+
 ## Usage
 
 This server is designed to be used with MCP clients. There are several ways to use it:
@@ -129,7 +142,7 @@ For agent frameworks like Cagent/Cline, you can use the provided agent configura
 This agent configuration:
 - Automatically detects activity types from your descriptions
 - Extracts and infers dates, titles, descriptions, and metrics
-- Uses Playwright MCP to scrape content from URLs (blog posts, YouTube videos, etc.)
+- Uses the scrape_content tool to extract metadata from URLs (blog posts, YouTube videos, etc.) using curl
 - Helps complete all required fields intelligently
 
 **Setup:**
@@ -152,7 +165,7 @@ Just describe your activity naturally, and the agent will handle the rest:
 
 The agent will automatically:
 - Detect the activity type
-- Extract information from URLs using Playwright
+- Extract information from URLs using the scrape_content tool (curl-based)
 - Fill in required fields
 - Ask for any missing information
 

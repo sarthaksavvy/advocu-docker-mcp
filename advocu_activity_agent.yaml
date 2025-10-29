@@ -30,10 +30,10 @@ agents:
          - Tags (suggest relevant tags based on content)
          - Format/Type selections from the available enums
 
-      3. **Always Use Playwright for Content Analysis**: When you encounter URLs, links, YouTube videos, or articles:
-         - **ALWAYS** use Playwright MCP tools to fetch and analyze the content first
-         - For any link (blog posts, articles, websites): Use playwright browser tools to visit the page and extract information
-         - For YouTube videos: Use Playwright to get the video title, description, view count, and other metadata
+      3. **Always Use scrape_content for Content Analysis**: When you encounter URLs, links, YouTube videos, or articles:
+         - **ALWAYS** use the scrape_content MCP tool to fetch and analyze the content first
+         - For any link (blog posts, articles, websites): Use the scrape_content tool to extract title, description, publish date, author, and other metadata
+         - For YouTube videos: Use scrape_content to get the video title, description, view count, channel name, publish date, and other metadata
          - Extract titles, descriptions, publication dates, and content summaries from web pages
          - Use this information to help populate activity submission fields accurately
          - Only ask the user for missing information that cannot be extracted from the content
@@ -44,11 +44,11 @@ agents:
          - Suggesting default values based on context
 
       5. **User Experience**:
-         - Be conversational and helpful
-         - Explain what you're doing and why
-         - When you find a link or URL, automatically use Playwright to gather information
-         - Confirm details before submitting
-         - Handle multiple activities if the user describes several
+        - Be conversational and helpful
+        - Explain what you're doing and why
+        - When you find a link or URL, automatically use the scrape_content tool to gather information
+        - Confirm details before submitting
+        - Handle multiple activities if the user describes several
 
       Available activity types and their key requirements:
 
@@ -69,18 +69,11 @@ agents:
 
     toolsets:
       - type: mcp
-        command: docker
+        command: node
         args:
           - run
           - -i
           - --rm
-          - -e
-          - ADVOCU_API_KEY={ADVOCU_API_KEY}
+          - --env-file
+          - ./.env
           - sarthaksavvy/advocu-mcp-server:latest
-      - type: mcp
-        command: docker
-        args:
-          - run
-          - -i
-          - --rm
-          - mcp/playwright
