@@ -2,6 +2,10 @@
 
 A Model Context Protocol (MCP) server for submitting activities to the Advocu platform.
 
+## Support
+
+If you find this project useful, please consider supporting my work through [GitHub Sponsors](https://github.com/sponsors/sarthaksavvy) 🙏
+
 ## Installation
 
 ```bash
@@ -108,21 +112,67 @@ Submit an amplification activity.
 
 ## Usage
 
-This server is designed to be used with MCP clients. Configure your MCP client to use this server.
+This server is designed to be used with MCP clients. There are several ways to use it:
 
-### Configuration Example
+### Option 1: Using with Agent Configuration (Recommended)
 
-Add this to your MCP client configuration:
+For agent frameworks like Cagent/Cline, you can use the provided agent configuration file. See [`advocu_activity_agent.yaml`](./advocu_activity_agent.yaml) for a complete example.
+
+This agent configuration:
+- Automatically detects activity types from your descriptions
+- Extracts and infers dates, titles, descriptions, and metrics
+- Uses Playwright MCP to scrape content from URLs (blog posts, YouTube videos, etc.)
+- Helps complete all required fields intelligently
+
+**Setup:**
+
+1. Copy `advocu_activity_agent.yaml` to your agent configuration directory
+2. Set the `ADVOCU_API_KEY` environment variable:
+   ```bash
+   export ADVOCU_API_KEY="your-api-key-here"
+   ```
+3. Make sure Docker is running (required for the Docker-based MCP server)
+4. The agent will automatically use the MCP server via Docker
+
+**Example usage with the agent:**
+
+Just describe your activity naturally, and the agent will handle the rest:
+
+- "I published a blog post about Docker yesterday at https://example.com/docker-blog"
+- "I gave a talk at DockerCon last week, 45 minutes, 200 attendees, virtual event"
+- "I had a feedback session with John from Docker today, 30 minutes via Slack"
+
+The agent will automatically:
+- Detect the activity type
+- Extract information from URLs using Playwright
+- Fill in required fields
+- Ask for any missing information
+
+### Option 2: Direct MCP Client Configuration
+
+For traditional MCP clients, add this to your MCP client configuration:
 
 ```json
 {
   "mcpServers": {
     "advocu": {
       "command": "node",
-      "args": ["path/to/advocu-mcp/dist/index.js"]
+      "args": ["path/to/advocu-mcp/dist/index.js"],
+      "env": {
+        "ADVOCU_API_KEY": "your-api-key-here",
+        "ADVOCU_API_URL": "https://api.advocu.com"
+      }
     }
   }
 }
+```
+
+### Option 3: Docker-based Usage
+
+You can also run the MCP server directly via Docker (as shown in the agent config):
+
+```bash
+docker run -i --rm -e ADVOCU_API_KEY=your-api-key-here sarthaksavvy/advocu-mcp-server:latest
 ```
 
 ## Authentication
