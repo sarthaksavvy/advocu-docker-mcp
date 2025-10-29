@@ -6,6 +6,14 @@ A Model Context Protocol (MCP) server for submitting activities to the Advocu pl
 
 If you find this project useful, please consider supporting my work through [GitHub Sponsors](https://github.com/sponsors/sarthaksavvy) 🙏
 
+## Follow Me
+
+Scan the QR code below to visit my website and follow my work:
+
+![QR Code](https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://sarthaksavvy.com)
+
+**Website:** [https://sarthaksavvy.com](https://sarthaksavvy.com)
+
 ## Installation
 
 ```bash
