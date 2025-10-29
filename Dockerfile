@@ -1,6 +1,9 @@
 # Use Node.js LTS version
 FROM node:20-slim
 
+# Install curl (required for scraping content)
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+
 # Set working directory
 WORKDIR /app
 
