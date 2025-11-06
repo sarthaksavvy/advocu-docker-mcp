@@ -1,40 +1,34 @@
-# Use Node.js LTS version
-FROM node:20-slim
-
-# Install curl (required for scraping content)
-RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
-
-# Set working directory
+FROM node:22-alpine AS builder
 WORKDIR /app
 
-# Copy package files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci --only=production
+RUN npm ci
 
-# Copy source code
 COPY src ./src
 COPY tsconfig.json ./
 
-# Install dev dependencies for building
-RUN npm ci
-
-# Build the TypeScript code
 RUN npm run build
 
-# Remove dev dependencies after build
-RUN npm prune --production
+FROM node:22-alpine
+WORKDIR /app
 
-# Remove source files to keep image small
-RUN rm -rf src tsconfig.json
+RUN apk add --no-cache curl
 
-# Expose port (MCP servers typically use stdio but keeping for consistency)
-# We don't actually need to expose anything for stdio-based servers
+COPY package*.json ./
 
-# Set the command to run the built server
+RUN npm ci --only=production && \
+    npm cache clean --force
+
+COPY --from=builder /app/dist ./dist
+
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001 && \
+    chown -R nodejs:nodejs /app
+
+USER nodejs
+
 CMD ["node", "dist/index.js"]
 
-# Metadata
 LABEL maintainer="Advocu MCP Server"
 LABEL description="MCP server for submitting activities to Advocu platform"
